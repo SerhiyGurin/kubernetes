@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+     name: web-deployment-autosceling
+     labels:
+        app: my-web
+        owner: sg
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            project: site-sg
+    template:
+        metadata:
+            labels:
+              project: site-sg
+        spec:
+            containers:
+                - name: site-sg
+                  image: serhiygurin/sg_web:v10
+                  ports:
+                    - containerPort: 8080
+---
+apiVersion: autosceling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata: 
+     name: web-deployment-autosceling
+spec:
+    scaleTargetRef:
+        apiVersion: apps/v2beta1
+        kind: Deployment
+        name: web-deployment-autosceling
+    minReplicas: 3
+    maxReplicas: 5
+    metrics:
+    - type: Resource
+       resource:
+        name: cpu
+        targetAverageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 8080                

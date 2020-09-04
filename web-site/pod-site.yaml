@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: site-pod
+    labels:
+        app: web-site
+        owner: sg
+spec:
+    containers:
+        - name: web-site
+          image: serhiygurin/sg_web:v10
+          ports:
+            - containerPort: 80

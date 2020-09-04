@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: access-prometheus
+  namespace: cattle-prometheus
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: prometheus.sg.vn
+    http:
+      paths:
+      - backend:
+          serviceName: access-prometheus
+          servicePort: 80
+        

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+     name: site-deployment
+     labels:
+        app: web-site
+        owner: sg
+spec:
+    selector:
+        matchLabels:
+            app: web-site
+    template:
+        metadata:
+            labels:
+              app: web-site
+        spec:
+            containers:
+                - name: web-site
+                  image: serhiygurin/sg_web:v10
+                  ports:
+                    - containerPort: 80                 
